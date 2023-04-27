@@ -2,6 +2,7 @@
 """Module: Filtered Logger"""
 from typing import List, Dict
 import logging
+import re
 
 
 class RedactingFormatter(logging.Formatter):
@@ -35,9 +36,9 @@ def parse_data(data: str, sep: str) -> Dict[str, str]:
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str):
     """filter datum method"""
-    parsed = parse_data(message, separator)
     for field in fields:
-        message = message.\
-            replace('{}={}'.format(field, parsed[field]),
-                    '{}={}'.format(field, redaction))
+        pattern = re.escape(
+            field) + r'=[A-Za-z0-9@#$%^&*()-./\\{}|]+' + re.escape(separator)
+        message = re.sub(pattern, "{}={}{}".format(
+            field, redaction, separator), message,)
     return message
