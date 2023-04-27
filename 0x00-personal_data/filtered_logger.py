@@ -3,7 +3,7 @@
 from typing import List, Dict
 import logging
 import re
-PII_FIELDS = ['email', 'phone', 'ssn', 'ip', 'user_agent']
+PII_FIELDS = ['name', 'email', 'phone', 'ssn', 'ip']
 
 
 class RedactingFormatter(logging.Formatter):
