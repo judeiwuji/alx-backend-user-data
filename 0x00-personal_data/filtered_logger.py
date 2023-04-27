@@ -30,6 +30,5 @@ def filter_datum(fields: List[str], redaction: str,
     """filter datum method"""
     for field in fields:
         pattern = re.compile(field + r'=.+?' + separator)
-        message = re.sub(pattern, "{}={}{}".format(
-            field, redaction, separator), message,)
+        message = re.sub(pattern, f"{field}={redaction}{separator}", message)
     return message
