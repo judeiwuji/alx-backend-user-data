@@ -37,8 +37,7 @@ def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str):
     """filter datum method"""
     for field in fields:
-        pattern = re.escape(
-            field) + r'=[A-Za-z0-9@#$%^&*()-./\\{}|]+' + re.escape(separator)
+        pattern = re.escape(field) + r'=.+?' + re.escape(separator)
         message = re.sub(pattern, "{}={}{}".format(
             field, redaction, separator), message,)
     return message
