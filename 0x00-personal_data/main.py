@@ -30,3 +30,15 @@ print("PII_FIELDS: {}".format(len(PII_FIELDS)))
 
 logger = get_logger()
 logger.info("name=john;email=john@mail;password=1234;ssn=12-22-3;ip=139.89.0.87;")
+
+
+# MYSQL Connection
+get_db = __import__('filtered_logger').get_db
+
+db = get_db()
+cursor = db.cursor()
+cursor.execute("SELECT COUNT(*) FROM users;")
+for row in cursor:
+    print(row[0])
+cursor.close()
+db.close()
