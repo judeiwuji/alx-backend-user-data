@@ -25,14 +25,6 @@ class RedactingFormatter(logging.Formatter):
         return super().format(record)
 
 
-def parse_data(data: str, sep: str) -> Dict[str, str]:
-    """parse message into dict"""
-    if data is None:
-        return {}
-    return {d.split('=')[0]: d.split('=')[1]
-            for d in data.split(sep) if d and '=' in d}
-
-
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str):
     """filter datum method"""
