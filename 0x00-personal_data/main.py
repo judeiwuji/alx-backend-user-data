@@ -20,3 +20,13 @@ messages = ["name=egg;email=eggmin@eggsample.com;password=eggcellent;date_of_bir
 
 for message in messages:
     print(filter_datum(fields, 'xxx', message, ';'))
+
+
+get_logger = __import__('filtered_logger').get_logger
+PII_FIELDS = __import__('filtered_logger').PII_FIELDS
+
+print(get_logger.__annotations__.get('return'))
+print("PII_FIELDS: {}".format(len(PII_FIELDS)))
+
+logger = get_logger()
+logger.info("name=john;email=john@mail;password=1234;ssn=12-22-3;ip=139.89.0.87;")
