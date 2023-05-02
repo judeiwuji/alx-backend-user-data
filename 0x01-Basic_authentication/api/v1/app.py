@@ -22,10 +22,17 @@ def not_found(error) -> str:
 
 
 @app.errorhandler(401)
-def not_found(error) -> str:
+def not_unauthorized(error) -> str:
     """ Not authorized handler
     """
     return jsonify({"error": "Not Unauthorized"}), 401
+
+
+@app.errorhandler(403)
+def access_forbidden(error) -> str:
+    """ Forbidden handler
+    """
+    return jsonify({"error": "Forbidden"}), 403
 
 
 if __name__ == "__main__":
