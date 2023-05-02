@@ -28,7 +28,9 @@ class Auth:
         Returns
          - authorization token
         """
-        return None
+        if request is None:
+            return None
+        return request.headers.get("authorization", None)
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
