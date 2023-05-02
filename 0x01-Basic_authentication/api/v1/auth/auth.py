@@ -13,7 +13,15 @@ class Auth:
         """
         Ensures that a route user is authenticated
         """
-        return False
+        if path is None:
+            return True
+        if excluded_paths is None:
+            return True
+        if path.endswith('/'):
+            path = path[0: -1]
+        if path in excluded_paths or path + '/' in excluded_paths:
+            return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """
