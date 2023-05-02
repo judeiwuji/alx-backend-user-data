@@ -71,6 +71,8 @@ class BasicAuth(Auth):
         from models.user import User
         users = User.search({'email': user_email})
 
+        if type(users) is not list or len(users) == 0:
+            return None
         for user in users:
             hashed = hashlib.sha256(user_pwd.encode()).hexdigest().lower()
             if user.password == hashed:
