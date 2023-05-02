@@ -68,13 +68,17 @@ class BasicAuth(Auth):
 
         if user_pwd is None or type(user_pwd) is not str:
             return None
-        from models.user import User
-        users = User.search({'email': user_email})
 
-        if type(users) is not list or len(users) == 0:
-            return None
-        for user in users:
-            hashed = hashlib.sha256(user_pwd.encode()).hexdigest().lower()
-            if user.password == hashed:
-                return user
+        from models.user import User
+        try:
+            users = User.search({'email': user_email})
+
+            if type(users) is not list or len(users) == 0:
+                return None
+            for user in users:
+                hashed = hashlib.sha256(user_pwd.encode()).hexdigest().lower()
+                if user.password == hashed:
+                    return user
+        except KeyError:
+            pass
         return None
