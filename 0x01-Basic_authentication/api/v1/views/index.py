@@ -3,6 +3,7 @@
 """
 from flask import jsonify, abort
 from api.v1.views import app_views
+from typing import NoReturn
 
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
@@ -27,7 +28,7 @@ def stats() -> str:
 
 
 @app_views.route('/unauthorized/', strict_slashes=False)
-def unauthorized():
+def unauthorized() -> NoReturn:
     """ GET /api/v1/unauthorized
     Return:
       - None
