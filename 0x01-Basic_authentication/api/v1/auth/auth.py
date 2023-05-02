@@ -19,9 +19,18 @@ class Auth:
             return True
         if path.endswith('/'):
             path = path[0: -1]
-        if path in excluded_paths or path + '/' in excluded_paths:
+        if path in excluded_paths or path + '/' in excluded_paths\
+                or self.wild_path_match(path, excluded_paths):
             return False
         return True
+
+    def wild_path_match(self, path: str, excluded_paths: List[str]) -> bool:
+        """match wild character"""
+        for d in excluded_paths:
+            if d.endswith("*"):
+                if path[:len(d) - 1] + '*' == d:
+                    return True
+        return False
 
     def authorization_header(self, request=None) -> str:
         """
