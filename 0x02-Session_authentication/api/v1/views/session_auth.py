@@ -2,7 +2,7 @@
 """ Module of Sessions views
 """
 from api.v1.views import app_views
-from flask import jsonify, request, make_response
+from flask import jsonify, request, make_response, abort
 import os
 
 
@@ -40,3 +40,12 @@ def session_login():
     response = make_response(jsonify(user.to_json()))
     response.set_cookie(session_name, session_id)
     return response
+
+
+@app_views.route("/auth_session/logout", methods=['DELETE'], strict_slashes=False)
+def session_logout():
+    """logs a user out of session"""
+    from api.v1.app import auth
+    if not auth.destroy_session(request):
+        abort(404)
+    return jsonify({})
