@@ -62,7 +62,7 @@ class Auth:
         self._db.update_user(user.id, session_id=session_id)
         return session_id
 
-    def get_user_from_session_id(self, session_id) -> Union[User, None]:
+    def get_user_from_session_id(self, session_id: str) -> Union[User, None]:
         """
         Returns
          - the corresponding User or None
@@ -75,3 +75,13 @@ class Auth:
     def destroy_session(self, user_id) -> None:
         """Destroys a specific user session"""
         self._db.update_user(user_id, session_id=None)
+
+    def get_reset_password_token(self, email: str) -> str:
+        """returns a token string"""
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            raise ValueError
+        token = _generate_uuid()
+        self._db.update_user(user.id, reset_token=token)
+        return token
