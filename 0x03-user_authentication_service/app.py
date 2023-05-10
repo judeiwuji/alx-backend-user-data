@@ -68,7 +68,6 @@ def profile():
     if user is None:
         abort(403)
     response = make_response(jsonify({"email": f"{user.email}"}))
-    response.set_cookie("session_id", session_id)
     return response
 
 
