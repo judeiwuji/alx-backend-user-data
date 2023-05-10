@@ -49,7 +49,7 @@ def sessions():
 
 
 @app.route("/sessions", methods=["DELETE"], strict_slashes=False)
-def delete_sessions():
+def logout():
     """Logout user from the app"""
     session_id = request.cookies.get("session_id")
     user = AUTH.get_user_from_session_id(session_id)
