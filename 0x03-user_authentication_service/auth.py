@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Authentication module"""
 from db import DB
-from bcrypt import hashpw, gensalt
+from bcrypt import hashpw, gensalt, checkpw
 from sqlalchemy.orm.exc import NoResultFound
 from user import User
 
@@ -32,3 +32,11 @@ class Auth:
             raise ValueError(f"User {email} already exists")
         hashed_password = _hash_password(password)
         return self._db.add_user(email, hashed_password)
+
+    def valid_login(self, email: str, password: str) -> bool:
+        """Validates user login"""
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            return False
+        return checkpw(password.encode(), user.hashed_password)
