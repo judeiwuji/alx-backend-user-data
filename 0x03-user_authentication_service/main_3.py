@@ -22,6 +22,5 @@ try:
     user = my_db.find_user_by(email=email)
     print(user.hashed_password)
     print("Password updated")
-
 except ValueError:
     print("Error")
