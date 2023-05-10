@@ -67,7 +67,9 @@ def profile():
     user = AUTH.get_user_from_session_id(session_id)
     if user is None:
         abort(403)
-    return jsonify({"email": f"{user.email}"})
+    response = make_response(jsonify({"email": f"{user.email}"}))
+    response.set_cookie("session_id", session_id)
+    return response
 
 
 if __name__ == "__main__":
