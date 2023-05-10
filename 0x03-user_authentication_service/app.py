@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """App module"""
 from flask import Flask, jsonify, request, abort,\
-    make_response, redirect
+    make_response, redirect, url_for
 from auth import Auth
 AUTH = Auth()
 app = Flask(__name__)
@@ -55,9 +55,9 @@ def delete_sessions():
     user = AUTH.get_user_from_session_id(session_id)
 
     if user is None:
-        return jsonify({}), 403
+        abort(403)
     AUTH.destroy_session(user.id)
-    return redirect("/", 301)
+    return redirect(url_for("index"))
 
 
 if __name__ == "__main__":
